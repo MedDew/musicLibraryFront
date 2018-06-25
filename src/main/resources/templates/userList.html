@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>List of Users</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Creation Date</th>
+                    <th>Last Login Date</th>
+                    <th>Is Logged</th>
+                </tr>
+                
+                <tr th:each="user : ${users}">
+                    <td>${user.id}</td>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.creationDate}</td>
+                    <td>${user.lastLoginDate}</td>
+                    <td>${user.isLogged}</td>
+                </tr>
+            </table>
+                
+            
+        </div>
+    </body>
+</html>

@@ -25,6 +25,13 @@
 	</properties>
 
 	<dependencies>
+                <dependency>
+                    <groupId>com.libraryapi</groupId>
+                    <artifactId>musicLibraryApI</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                    <!--compile is the default value-->
+                   <!--<scope>compile</scope>-->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -43,13 +50,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.libraryapi</groupId>
-                        <artifactId>musicLibraryApI</artifactId>
-                        <version>0.0.1-SNAPSHOT</version>
-                        <!--compile is the default value-->
-                        <scope>compile</scope>
 		</dependency>
 	</dependencies>
 
