@@ -46,4 +46,10 @@ public class UserService
         
         return userList;
     }
+    
+    public UserDTO createUser(RestTemplate restTemplate)
+    {
+        UserDTO createdUser = restTemplate.getForObject("http://localhost:8090/user", UserDTO.class);
+        return createdUser;
+    }
 }
