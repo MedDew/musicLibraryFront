@@ -7,6 +7,7 @@ package com.libraryfront.musicLibraryFront.controller;
 
 //import com.libraryapi.musicLibraryApI.dto.UserDTO;
 //import com.librarymiddleware.musicLibraryAPI.DTO.UserDTO;
+import com.libraryfront.musicLibraryFront.component.UserDTOComponent;
 import com.libraryfront.musicLibraryFront.service.UserService;
 import com.musiclibrary.musiclibraryapi.dto.UserDTO;
 import java.time.LocalDateTime;
@@ -35,6 +36,9 @@ public class UserController
 {
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private UserDTOComponent userDTOComponent;  
     
     @GetMapping(path = "/users")
 //    @ResponseBody
@@ -69,7 +73,7 @@ public class UserController
     }
     
     @GetMapping("/user")
-    public String shoUserForm(UserDTO userDTO, Model model)
+    public String showUserForm(UserDTO userDTO, Model model)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//HH:mm:ss
         LocalDateTime dt = LocalDateTime.now();
@@ -101,5 +105,14 @@ public class UserController
         UserDTO createdUser = userService.findUserById(restTemplate, userId);
         model.addAttribute("user", createdUser);
         return "createdUser";
+    }
+    
+    @GetMapping("/users/{id}")
+    public String showUpdateUserForm(RestTemplate restTemplate, UserDTO userDTO, @PathVariable(name = "id") long userId, Model model)
+    {
+        UserDTO userFound = userService.findUserById(restTemplate, userId);
+        userDTOComponent.initUserDTO(userDTO, userFound);
+//        model.addAttribute("user", userFound);
+        return "userUpdateForm";
     }
 }
