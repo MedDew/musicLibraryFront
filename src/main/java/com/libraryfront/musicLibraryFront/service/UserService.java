@@ -36,6 +36,7 @@ public class UserService
 {
     private static final String URL_GET_USERS = "http://localhost:8090/users";
     private static final String URL_CREATE_USER = "http://localhost:8090/user";
+    private static final String URL_MODIFY_USER = "http://localhost:8090/users/{id}";
     
     //@Autowired
     //private RestTemplate restTemplate;
@@ -127,5 +128,13 @@ public class UserService
     {
         UserDTO foundUser = restTemplate.getForObject("http://localhost:8090/user/"+userId, UserDTO.class);
         return foundUser;
+    }
+    
+    public UserDTO modifyUser(RestTemplate restTemplate, UserDTO userDTO, long id)
+    {
+        restTemplate.put(URL_MODIFY_USER, userDTO);
+        UserDTO updatedUser = findUserById(restTemplate, id);
+        
+        return updatedUser;
     }
 }
