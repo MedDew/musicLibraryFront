@@ -115,4 +115,21 @@ public class UserController
 //        model.addAttribute("user", userFound);
         return "userUpdateForm";
     }
+    
+    @PostMapping(path = "/users/{id}")
+    public String putUser(RestTemplate restTemplate, @Valid UserDTO userDTO, @PathVariable(name = "id") long userId)
+    {
+        UserDTO updatedUser = userService.modifyUser(restTemplate, userDTO, userId);
+        
+        return "redirect:/users/updated/"+updatedUser.getId();
+    }
+    
+    @GetMapping(path = "/users/updated/{id}")
+    public String showUpdatedUser(RestTemplate restTemplate, @PathVariable long id, Model model)
+    {
+        UserDTO updatedUser = userService.findUserById(restTemplate, id);
+        model.addAttribute("user", updatedUser);
+        
+        return "updatedUser";
+    }
 }
