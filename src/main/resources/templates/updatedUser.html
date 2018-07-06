@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>User Modification Result</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2">User Modification Result</h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 mx-auto">
+                <div class="card text-white bg-success mb-3">
+                    
+                    <div class="card-header">Edition Success</div>
+                    <div class="card-body">
+                        <h5 class="card-title">User updated</h5>
+                        <p class="card-text">
+                            Your updated user :
+                            <ul class="nav justify-content-center">
+                                <li class="nav-item">First Name : <b class="badge badge-dark" th:text="${user.firstName}"></b></li>
+                                <li class="nav-item">Last Name : <b class="badge badge-dark" th:text="${user.lastName}"></b></li>
+                            </ul>
+                            has been updated.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+        </div>
+    </body>
+</html>
