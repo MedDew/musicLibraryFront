@@ -132,7 +132,7 @@ public class UserService
     
     public UserDTO modifyUser(RestTemplate restTemplate, UserDTO userDTO, long id)
     {
-        restTemplate.put(URL_MODIFY_USER, userDTO);
+        restTemplate.put(URL_MODIFY_USER, userDTO, id);
         UserDTO updatedUser = findUserById(restTemplate, id);
         
         return updatedUser;
