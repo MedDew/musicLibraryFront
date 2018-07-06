@@ -9,6 +9,8 @@ package com.libraryfront.musicLibraryFront.controller;
 //import com.librarymiddleware.musicLibraryAPI.DTO.UserDTO;
 import com.libraryfront.musicLibraryFront.service.UserService;
 import com.musiclibrary.musiclibraryapi.dto.UserDTO;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -67,26 +69,37 @@ public class UserController
     }
     
     @GetMapping("/user")
-    public String shoUserForm(UserDTO userDTO)
+    public String shoUserForm(UserDTO userDTO, Model model)
     {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//HH:mm:ss
+        LocalDateTime dt = LocalDateTime.now();
+        String localDateTime = dt.format(formatter);
+//        userDTO.setCreationDate(localDateTime);
+        System.err.println("localDateTime : "+localDateTime+" userDTO : "+userDTO);
+//        model.addAttribute(localDateTime);
         return "userForm";
     }
     
     @PostMapping(path = "/user")
-    public String postUser(@Valid UserDTO userDTO, BindingResult bindingResult, Model model, RestTemplate restTemplate)
+    public String postUser(@Valid UserDTO userDTO, BindingResult bindingResult,  RestTemplate restTemplate)
     {
         if(bindingResult.hasErrors())
         {
+            System.err.println("userDTO : "+userDTO);
             return "userForm";
         }
-        UserDTO createdUser = userService.createUser(restTemplate);
-//        model.addAttribute("createdUser", createdUser);
+        System.err.println("userDTO to create ==>  "+userDTO);
+        UserDTO createdUser = userService.createUser(restTemplate, userDTO);
+
+//        return null;
         return "redirect:/user/created/"+createdUser.getId();
     }
     
     @GetMapping(path = "/user/created/{id}")
-    public String showUserCreated(@PathVariable(name = "id") long userId)
+    public String showUserCreated(RestTemplate restTemplate , @PathVariable(name = "id") long userId, Model model)
     {
+        UserDTO createdUser = userService.findUserById(restTemplate, userId);
+        model.addAttribute("user", createdUser);
         return "createdUser";
     }
 }

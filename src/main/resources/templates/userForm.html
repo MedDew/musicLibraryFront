@@ -45,7 +45,8 @@
                         <div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
 
                         <label for="creationDate">Creation Date : </label>
-                        <input type="date" th:field="*{creationDate}"/>
+                        <input type="datetime-local" th:field="*{creationDate}" id="creationDate" readonly="readonly"/>
+                        <!--<input type="date" disabled id="creationDate"/>-->
                         <div id="alert-date" class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('creationDate')}" th:errors="*{creationDate}"></div>
                         
                         <br/>
@@ -62,4 +63,48 @@
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        d = new Date();
+        day = d.getDate();
+        month = d.getMonth() + 1;
+        if(month < 10)
+        {
+            month = "0"+month;
+        }
+        if(day < 10)
+        {
+            day = "0"+day;
+        }
+        year = d.getFullYear();
+        hour = d.getHours();
+        if(hour < 10)
+        {
+            hour = "0"+hour;
+        }
+        minutes = d.getMinutes();
+        if(minutes < 10)
+        {
+            minutes = "0"+minutes;
+        }
+        seconds=d.getSeconds();
+        if(seconds < 10)
+        {
+            seconds = "0"+seconds;
+        }
+        
+        console.log(year+"-"+month+"-"+day+" "+hour+":"+minutes);
+//        document.getElementById('creationDate').setAttribute("value", year+"-"+month+"-"+day+" "+hour+":"+minutes);
+//        document.getElementById('creationDate').valueAsDate = new Date();
+        document.getElementById('creationDate').defaultValue = year+"-"+month+"-"+day+"T"+hour+":"+minutes+":"+seconds;
+        console.log(document.getElementById('creationDate').value);
+//        var dateControl = document.querySelector('input[type="date"]');
+//        dateControl.value = day+"/"+month+"/"+year;
+        o = document.getElementById('creationDate');
+        for(p in o)
+        {
+            console.log("p : "+p);
+        }
+//            alert(document.querySelectorAll('input[type=date]'));
+        
+    </script>
 </html>
