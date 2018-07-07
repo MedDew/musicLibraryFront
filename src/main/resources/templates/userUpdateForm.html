@@ -44,7 +44,7 @@
                         <input  type="text" th:field="*{lastName}"/>
                         <div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
 
-                        <input  type="hidden" th:value="${isLogged}"/>
+                        <input  type="hidden" th:field="*{isLogged}" th:value="${isLogged}"/>
                                               
                         <br/>
                         <button type="submit" class="button-secondary pure-button">
