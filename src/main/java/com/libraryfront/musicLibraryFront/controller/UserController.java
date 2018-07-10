@@ -72,7 +72,7 @@ public class UserController
         return "userList";
     }
     
-    @GetMapping("/user")
+    @GetMapping("/users/create")
     public String showUserForm(UserDTO userDTO, Model model)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//HH:mm:ss
@@ -84,7 +84,7 @@ public class UserController
         return "userCreateForm";
     }
     
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/users/create")
     public String postUser(@Valid UserDTO userDTO, BindingResult bindingResult,  RestTemplate restTemplate)
     {
         if(bindingResult.hasErrors())
