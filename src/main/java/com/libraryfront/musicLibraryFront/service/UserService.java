@@ -35,6 +35,7 @@ import org.springframework.web.client.RestTemplate;
 public class UserService 
 {
     private static final String URL_GET_USERS = "http://localhost:8090/users";
+    private static final String URL_GET_USER = "http://localhost:8090/users/{id}";
     private static final String URL_CREATE_USER = "http://localhost:8090/users/create";
     private static final String URL_MODIFY_USER = "http://localhost:8090/users/{id}";
     private static final String URL_DELETE_USER = "http://localhost:8090/users/delete/{id}";
@@ -127,7 +128,7 @@ public class UserService
     
     public UserDTO findUserById(RestTemplate restTemplate, long userId)
     {
-        UserDTO foundUser = restTemplate.getForObject("http://localhost:8090/user/"+userId, UserDTO.class);
+        UserDTO foundUser = restTemplate.getForObject(URL_GET_USER, UserDTO.class, userId);
         return foundUser;
     }
     
