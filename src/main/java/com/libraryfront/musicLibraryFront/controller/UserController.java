@@ -116,7 +116,7 @@ public class UserController
         return "createdUser";
     }
     
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/users/update/{id}")
     public String showUpdateUserForm(RestTemplate restTemplate, UserDTO userDTO, @PathVariable(name = "id") long userId)//, Model model
     {
         UserDTO userFound = userService.findUserById(restTemplate, userId);
@@ -125,7 +125,7 @@ public class UserController
         return "userUpdateForm";
     }
     
-    @PostMapping(path = "/users/edit/{id}")
+    @PostMapping(path = "/users/update/{id}")
     public String putUser(RestTemplate restTemplate, @Valid UserDTO userDTO, BindingResult bindingResult, @PathVariable(name = "id") long userId)
     {
         if(bindingResult.hasErrors())
