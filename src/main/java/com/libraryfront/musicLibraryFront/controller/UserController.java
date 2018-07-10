@@ -84,6 +84,15 @@ public class UserController
         return "userCreateForm";
     }
     
+    @GetMapping(path = "/users/{id}")
+    public String showSpecificUser(RestTemplate restTemplate, @PathVariable(name = "id") long userId, Model model)
+    {
+        UserDTO foundUser = userService.findUserById(restTemplate, userId);
+        model.addAttribute("user", foundUser);
+        
+        return "specificUser";
+    }
+            
     @PostMapping(path = "/users/create")
     public String postUser(@Valid UserDTO userDTO, BindingResult bindingResult,  RestTemplate restTemplate)
     {
@@ -107,7 +116,7 @@ public class UserController
         return "createdUser";
     }
     
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/edit/{id}")
     public String showUpdateUserForm(RestTemplate restTemplate, UserDTO userDTO, @PathVariable(name = "id") long userId)//, Model model
     {
         UserDTO userFound = userService.findUserById(restTemplate, userId);
@@ -116,7 +125,7 @@ public class UserController
         return "userUpdateForm";
     }
     
-    @PostMapping(path = "/users/{id}")
+    @PostMapping(path = "/users/edit/{id}")
     public String putUser(RestTemplate restTemplate, @Valid UserDTO userDTO, BindingResult bindingResult, @PathVariable(name = "id") long userId)
     {
         if(bindingResult.hasErrors())
