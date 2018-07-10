@@ -139,12 +139,20 @@ public class UserController
     }
     
     @GetMapping("/users/delete/{id}")
-    public String showDeleteUser(RestTemplate restTemplate, UserDTO userDTO, @PathVariable(name = "id") long userId)//Model model, 
+    public String showDeleteUser(RestTemplate restTemplate, UserDTO userDTO, @PathVariable(name = "id") long userId) 
     {
         UserDTO userToDelete = userService.findUserById(restTemplate, userId);
         userDTOComponent.initUserDTO(userDTO, userToDelete);
-//        model.addAttribute("user", userToDelete);
         
-        return "userDelete";
+        return "userDeleteForm";
+    }
+    
+    @PostMapping("/users/delete/{id}")
+    public String eraseUser(RestTemplate restTemplate, UserDTO userDTO, @PathVariable long id, Model model)
+    {
+        UserDTO userDeleted = userService.eraseUser(restTemplate, id);
+        model.addAttribute("user", userDeleted);
+        
+        return "deletedUser";
     }
 }

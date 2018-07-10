@@ -6,6 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" th:href="@{/css/pure-min.css}" />
         <link type="text/css" rel="stylesheet" th:href="@{/css/buttons-min.css}" />
+        <style type="text/css">
+            .button-error
+            {
+                color: white;
+                border-radius: 4px;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                background: rgb(223, 117, 20); /* this is an orange */
+            }
+            .button-error {
+                background: rgb(202, 60, 60); /* this is a maroon */
+            }
+        </style>
     </head>
     <body>
          <div class="pure-g">
@@ -26,7 +38,7 @@
 
                                               
                         <br/>
-                        <button type="submit" class="button-secondary pure-button">
+                        <button type="submit" class="button-error pure-button">
                             Submit
                         </button>
                     </fieldset>

@@ -17,11 +17,15 @@
                 justify-content: center;
                 /*padding-left:2em;*/ 
             }
+            .button-error,
             .button-warning{
                 color: white;
                 border-radius: 4px;
                 text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
                 background: rgb(223, 117, 20); /* this is an orange */
+            }
+            .button-error {
+                background: rgb(202, 60, 60); /* this is a maroon */
             }
         </style>
     </head>
@@ -42,6 +46,7 @@
                             <th>Last Login Date</th>
                             <th>Is Logged</th>
                             <th>UPDATE Action</th>
+                            <th>DELETE Action</th>
                         </tr>
                     </thead>
 
@@ -55,6 +60,11 @@
                         <td>
                             <a class="button-warning pure-button" th:href="@{'/users/'+${user.id}}">
                                 Update
+                            </a> 
+                        </td>
+                        <td>
+                            <a class="button-error pure-button" th:href="@{'/users/delete/'+${user.id}}">
+                                Delete
                             </a> 
                         </td>
                     </tr>
