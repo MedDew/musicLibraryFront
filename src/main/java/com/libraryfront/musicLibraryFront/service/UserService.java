@@ -35,7 +35,7 @@ import org.springframework.web.client.RestTemplate;
 public class UserService 
 {
     private static final String URL_GET_USERS = "http://localhost:8090/users";
-    private static final String URL_CREATE_USER = "http://localhost:8090/user";
+    private static final String URL_CREATE_USER = "http://localhost:8090/users/create";
     private static final String URL_MODIFY_USER = "http://localhost:8090/users/{id}";
     private static final String URL_DELETE_USER = "http://localhost:8090/users/delete/{id}";
     
