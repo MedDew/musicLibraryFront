@@ -31,7 +31,7 @@
             </div>
             
             <div class="pure-u-1-3"><!--pure-u-md-1-3-->
-                <form class="pure-form pure-form-stacked" action="#" th:action="@{'/users/'+${id}}" th:object="${userDTO}" method="POST">
+                <form class="pure-form pure-form-stacked" action="#" th:action="@{'/users/update/'+${id}}" th:object="${userDTO}" method="POST">
                     
                     <fieldset>
                         <legend>User Form Creation</legend>
