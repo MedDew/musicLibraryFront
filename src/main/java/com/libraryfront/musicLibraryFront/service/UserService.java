@@ -37,6 +37,7 @@ public class UserService
     private static final String URL_GET_USERS = "http://localhost:8090/users";
     private static final String URL_CREATE_USER = "http://localhost:8090/user";
     private static final String URL_MODIFY_USER = "http://localhost:8090/users/{id}";
+    private static final String URL_DELETE_USER = "http://localhost:8090/users/delete/{id}";
     
     //@Autowired
     //private RestTemplate restTemplate;
@@ -136,5 +137,14 @@ public class UserService
         UserDTO updatedUser = findUserById(restTemplate, id);
         
         return updatedUser;
+    }
+    
+    public UserDTO eraseUser(RestTemplate restTemplate, long id)
+    {
+        //DO THAT WAY IF YOU DON'T NEED TO RECOVER THE DELETED USER
+        //restTemplate.delete(URL_DELETE_USER, id);
+        UserDTO deletedUser = restTemplate.exchange(URL_DELETE_USER, HttpMethod.DELETE, null, UserDTO.class, id).getBody();
+        
+        return deletedUser;
     }
 }

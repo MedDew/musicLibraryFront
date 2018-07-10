@@ -137,4 +137,14 @@ public class UserController
         
         return "updatedUser";
     }
+    
+    @GetMapping("/users/delete/{id}")
+    public String showDeleteUser(RestTemplate restTemplate, UserDTO userDTO, @PathVariable(name = "id") long userId)//Model model, 
+    {
+        UserDTO userToDelete = userService.findUserById(restTemplate, userId);
+        userDTOComponent.initUserDTO(userDTO, userToDelete);
+//        model.addAttribute("user", userToDelete);
+        
+        return "userDelete";
+    }
 }
