@@ -81,7 +81,7 @@ public class UserController
 //        userDTO.setCreationDate(localDateTime);
         System.err.println("localDateTime : "+localDateTime+" userDTO : "+userDTO);
 //        model.addAttribute(localDateTime);
-        return "userForm";
+        return "userCreateForm";
     }
     
     @PostMapping(path = "/user")
