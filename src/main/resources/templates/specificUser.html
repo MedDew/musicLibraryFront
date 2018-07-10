@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title th:text="${user.firstName}+' : '+${user.lastName}"></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <style type="text/css">
+            .col-centered{
+                float: none;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="container">
+           
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2">User Features</h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 col-centered">
+                
+                <div class="card text-white bg-success mb-3">
+                    
+                    <div class="card-header">User Specific Features</div>
+                    <div class="card-body">
+                        <h5 class="card-title">User characteritics :</h5>
+                        
+                        <ul class="list-group">
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark"> User Id :</b> <span  th:text="${user.Id}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">User FirstName :</b> <span class="blockquote" th:text="${user.firstName}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">User LastName :</b> <span class="blockquote" th:text="${user.lastName}"></span>
+                           </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">User Creation Date :</b> <span class="blockquote" th:text="${user.creationDate}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">User Last Login Date :</b> <span class="blockquote" th:text="${user.lastLoginDate}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">User Logged :</b> <span class="blockquote" th:text="${user.isLogged}"></span>
+                            </li>
+                        </ul>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <a class="btn btn-primary" th:href="@{/users}">Back to user's list</a>
+                    </div>    
+                </div>
+                
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
