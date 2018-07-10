@@ -75,11 +75,11 @@ public class UserController
     @GetMapping("/users/create")
     public String showUserForm(UserDTO userDTO, Model model)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//HH:mm:ss
-        LocalDateTime dt = LocalDateTime.now();
-        String localDateTime = dt.format(formatter);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//HH:mm:ss
+//        LocalDateTime dt = LocalDateTime.now();
+//        String localDateTime = dt.format(formatter);
 //        userDTO.setCreationDate(localDateTime);
-        System.err.println("localDateTime : "+localDateTime+" userDTO : "+userDTO);
+//        System.err.println("localDateTime : "+localDateTime+" userDTO : "+userDTO);
 //        model.addAttribute(localDateTime);
         return "userCreateForm";
     }
