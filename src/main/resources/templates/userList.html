@@ -5,6 +5,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" th:href="@{/css/pure-min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/buttons-min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
         <style type="text/css">
             .block {
                 display: block;
@@ -36,6 +40,10 @@
         </style>
     </head>
     <body>
+        <div th:replace="fragments/menu :: menu">
+            
+        </div>
+        
         <div class="pure-g block">
             <div class="pure-u-1-5"><!--pure-u-md-1-3-->
                 
