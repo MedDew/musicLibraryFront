@@ -108,7 +108,7 @@ public class UserService
 //        System.err.println(" jsonObj.toString() : "+jsonObj.toString());
 //        System.err.println(" requestJSON : "+requestJSON);
         
-        // DATA ATTCHED TO THE REQUEST
+        // DATA ATTACHED TO THE REQUEST
         HttpEntity<String> requestBody = new HttpEntity<>(jsonObj.toString(), headers);
 //        System.err.println("requestBody : "+requestBody);
         
