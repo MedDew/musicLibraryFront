@@ -65,7 +65,7 @@ public class GenreController
     }
     
     @PostMapping("/genres/create")
-    public String postGenre(RestTemplate restTemplate, BindingResult bindingResult, Model model, @Valid GenreDTO genreDTO)
+    public String postGenre(@Valid GenreDTO genreDTO, BindingResult bindingResult, RestTemplate restTemplate, Model model)
     {
         if(bindingResult.hasErrors())
         {
