@@ -33,7 +33,7 @@ public class GenreResponseErrorHandler implements ResponseErrorHandler
     @Override
     public void handleError(ClientHttpResponse response) throws IOException 
     {
-        //Convert an InputStream to String 
+        //Convert an InputStream to String
         String responseBody =  new BufferedReader(new InputStreamReader(response.getBody())).lines().collect(Collectors.joining("\n"));
         GenreException genreException = new GenreException(response.getStatusCode());
         
