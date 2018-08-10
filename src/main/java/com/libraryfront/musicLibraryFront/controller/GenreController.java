@@ -5,6 +5,7 @@
  */
 package com.libraryfront.musicLibraryFront.controller;
 
+import com.libraryfront.musicLibraryFront.component.GenreDTOComponent;
 import com.libraryfront.musicLibraryFront.exception.GenreException;
 import com.libraryfront.musicLibraryFront.exceptionhandler.GenreResponseErrorHandler;
 import com.libraryfront.musicLibraryFront.service.GenreService;
@@ -32,6 +33,9 @@ public class GenreController
 {
     @Autowired
     private GenreService genreService;
+    
+    @Autowired
+    private GenreDTOComponent genreDTOComponent;
     
     @GetMapping(path = "genres")
     public String showGenreList(Model model, RestTemplate restTemplate)
@@ -120,5 +124,14 @@ public class GenreController
         model.addAttribute("createdGenre", createdGenre);
         
         return "musicGenre/createdGenre";
+    }
+    
+    @GetMapping(path = "/genres/update/{id}")
+    public String showUpdateGenreForm(RestTemplate restTemplate, GenreDTO genreDTO, @PathVariable(name = "id") long genreId)
+    {
+        GenreDTO genreFound = genreService.findGenreById(restTemplate, genreId);
+        genreDTOComponent.iniGenreDTO(genreDTO, genreFound);
+        
+        return "musicGenre/genreUpdateForm";
     }
 }
