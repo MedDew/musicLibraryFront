@@ -11,6 +11,7 @@ import com.musiclibrary.musiclibraryapi.dto.GenreDTO;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -95,5 +96,24 @@ public class GenreService
             errorGenreDTO.setErrorMessage(errorMessage);
             return errorGenreDTO;
         }*/
+    }
+    
+    public GenreDTO modifyGenre(RestTemplate restTemplate, GenreDTO genreDTO, long genreId)
+    {
+        //SET THE HEADER TO GET THE REQUEST BODY AS APPLICATION JSON
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        
+        //CONVERT genreDTO OBJECT TO JSON OBJECT TO BE SENT TO THE WEBSERVICE 
+        JSONObject jsonObj = new JSONObject(genreDTO);
+        
+        // DATA ATTCHED TO THE REQUEST
+        HttpEntity<String> requestBody = new HttpEntity<>(jsonObj.toString(), headers);
+        
+        ResponseEntity<GenreDTO> genreResult = restTemplate.exchange(URL_UPDATE_GENRE, HttpMethod.PUT, requestBody, GenreDTO.class, genreId);
+        
+        GenreDTO updatedGenre = genreResult.getBody();
+        
+        return updatedGenre;
     }
 }
