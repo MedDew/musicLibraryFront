@@ -136,7 +136,8 @@ public class GenreController
         return "musicGenre/genreUpdateForm";
     }
     
-    @PutMapping(path = "/genres/update/{id}")
+//    @PutMapping(path = "/genres/update/{id}")
+    @PostMapping(path = "/genres/update/{id}")
     public String putGenre(@Valid GenreDTO genreDTO, BindingResult bindingResult, RestTemplate restTemplate, @PathVariable long id)
     {
         if(bindingResult.hasErrors())
