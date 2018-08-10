@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -133,5 +134,28 @@ public class GenreController
         genreDTOComponent.iniGenreDTO(genreDTO, genreFound);
         
         return "musicGenre/genreUpdateForm";
+    }
+    
+    @PutMapping(path = "/genres/update/{id}")
+    public String putGenre(@Valid GenreDTO genreDTO, BindingResult bindingResult, RestTemplate restTemplate, @PathVariable long id)
+    {
+        if(bindingResult.hasErrors())
+        {
+            return "musicGenre/genreUpdateForm";
+        }
+        
+        GenreDTO updatedGenre = genreService.modifyGenre(restTemplate, genreDTO, id);
+        
+        return "redirect:/genres/updated/"+updatedGenre.getId();
+    }
+    
+    @GetMapping("/genres/updated/{id}")
+    public String showUpdatedGenre(RestTemplate restTemplate, Model model, @PathVariable(name = "id") long genreId)
+    {
+        GenreDTO updatedGenre = genreService.findGenreById(restTemplate, genreId);
+        
+        model.addAttribute("genre", updatedGenre);
+        
+        return "/musicGenre/updatedGenre";
     }
 }
