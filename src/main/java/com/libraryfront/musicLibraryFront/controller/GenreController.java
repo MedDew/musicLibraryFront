@@ -163,7 +163,7 @@ public class GenreController
     
 //    @PutMapping(path = "/genres/update/{id}")
     @PostMapping(path = "/genres/update/{id}")
-    public String putGenre(@Valid GenreDTO genreDTO, BindingResult bindingResult, RestTemplate restTemplate, @PathVariable long id)
+    public String putGenre(@Valid GenreDTO genreDTO, BindingResult bindingResult, RestTemplate restTemplate, @PathVariable long id, Model model)
     {
         if(bindingResult.hasErrors())
         {
@@ -173,9 +173,33 @@ public class GenreController
             return "musicGenre/genreUpdateForm";
         }
         
-        GenreDTO updatedGenre = genreService.modifyGenre(restTemplate, genreDTO, id);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        //FOR THE SMART ASS TRYING TO CHANGE THE ID DIRECTLY FROM THE FORM ACTION 
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
         
-        return "redirect:/genres/updated/"+updatedGenre.getId();
+        try 
+        {
+            GenreDTO updatedGenre = genreService.modifyGenre(restTemplate, genreDTO, id);
+            return "redirect:/genres/updated/"+updatedGenre.getId();
+        } 
+        catch (GenreException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            GenreDTO errorGenreDTO = new GenreDTO();
+            errorGenreDTO.setErrorMessage(errorMessage);
+            
+            model.addAttribute("errorGenreDTO", errorGenreDTO);
+            
+            return "musicGenre/genreNotFoundException";
+        }
     }
     
     @GetMapping("/genres/updated/{id}")
