@@ -42,7 +42,7 @@ public class GenreService
         return  genreList;
     }
     
-    public GenreDTO findGenreById(RestTemplate restTemplate, long genreId)
+    public GenreDTO findGenreById(RestTemplate restTemplate, long genreId)//WORK ANYWAY WITHOUT throws GenreException
     {
         GenreDTO foundGenre = restTemplate.getForObject(URL_GET_GENRE, GenreDTO.class, genreId);
         
