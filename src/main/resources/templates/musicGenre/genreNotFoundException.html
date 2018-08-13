@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NOT FOUND</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    </head>
+    <body>
+        <div class="mxy-5" th:replace="fragments/menu :: menu">
+            
+        </div>
+        
+        <div class="container">
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2">Unable to amend Genre</h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 mx-auto">
+                <div class="card text-white bg-warning mb-3">
+                    
+                    <div class="card-header">No Suitable Genre To Update</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Warning : No Genre Found</h5>
+                        <p class="card-text">
+                            The genre you are trying to update is not found :
+                        </p>
+                        
+                        <p class="card-text">
+                            <span class="text-danger" th:text='${errorGenreDTO.errorMessage}'></span>
+                        </p>
+                        
+                        <a class='btn btn-outline-success' th:href='@{/genres}'>Back To Genre List</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+        </div>
+    </body>
+</html>
