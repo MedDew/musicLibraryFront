@@ -168,8 +168,8 @@ public class GenreController
         if(bindingResult.hasErrors())
         {
             //Initialze the Genre Update Form again
-            GenreDTO genreFound = genreService.findGenreById(restTemplate, id);
-            genreDTOComponent.iniGenreDTO(genreDTO, genreFound);
+            //GenreDTO genreFound = genreService.findGenreById(restTemplate, id);
+            //genreDTOComponent.iniGenreDTO(genreDTO, genreFound);
             return "musicGenre/genreUpdateForm";
         }
         
