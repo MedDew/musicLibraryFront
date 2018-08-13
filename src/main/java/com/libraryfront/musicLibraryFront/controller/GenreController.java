@@ -128,12 +128,37 @@ public class GenreController
     }
     
     @GetMapping(path = "/genres/update/{id}")
-    public String showUpdateGenreForm(RestTemplate restTemplate, GenreDTO genreDTO, @PathVariable(name = "id") long genreId)
+    public String showUpdateGenreForm(RestTemplate restTemplate, GenreDTO genreDTO, @PathVariable(name = "id") long genreId, Model model)
     {
-        GenreDTO genreFound = genreService.findGenreById(restTemplate, genreId);
-        genreDTOComponent.iniGenreDTO(genreDTO, genreFound);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
+        try 
+        {
+            GenreDTO genreFound = genreService.findGenreById(restTemplate, genreId);
+            genreDTOComponent.iniGenreDTO(genreDTO, genreFound);
+            return "musicGenre/genreUpdateForm";
+            
+        } 
+        catch (GenreException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            System.out.println("RESPONSE AS ARRAY : "+e.getResponseBodyAsByteArray());
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            GenreDTO errorGenreDTO = new GenreDTO();
+            errorGenreDTO.setErrorMessage(errorMessage);
+            
+            model.addAttribute("errorGenreDTO", errorGenreDTO);
+            
+            return "musicGenre/genreNotFoundException";
+        }
         
-        return "musicGenre/genreUpdateForm";
     }
     
 //    @PutMapping(path = "/genres/update/{id}")
