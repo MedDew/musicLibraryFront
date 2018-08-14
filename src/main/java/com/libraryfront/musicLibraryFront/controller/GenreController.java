@@ -211,4 +211,37 @@ public class GenreController
         
         return "/musicGenre/updatedGenre";
     }
+    
+    @GetMapping("/genres/delete/{genreId}")
+    public String showDeleteGenreForm(RestTemplate restTemplate, GenreDTO genreDTO, @PathVariable long genreId, Model model)
+    {
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
+        
+        try 
+        {
+            GenreDTO genreToDelete = genreService.findGenreById(restTemplate, genreId);
+            genreDTOComponent.iniGenreDTO(genreDTO, genreToDelete);
+            
+            return "/musicGenre/genreDeleteForm";
+        } 
+        catch (GenreException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            GenreDTO errorGenreDTO = new GenreDTO();
+            errorGenreDTO.setErrorMessage(errorMessage);
+            
+            model.addAttribute("errorGenreDTO", errorGenreDTO);
+            
+            return "musicGenre/genreNotFoundException";
+        }
+    }
 }
