@@ -6,8 +6,9 @@
 package com.libraryfront.musicLibraryFront.service;
 
 import com.libraryfront.musicLibraryFront.exception.GenreException;
-import com.libraryfront.musicLibraryFront.exceptionhandler.GenreResponseErrorHandler;
 import com.musiclibrary.musiclibraryapi.dto.GenreDTO;
+import java.util.HashMap;
+import java.util.Map;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -115,5 +116,19 @@ public class GenreService
         GenreDTO updatedGenre = genreResult.getBody();
         
         return updatedGenre;
+    }
+    
+    public GenreDTO eraseGenre(RestTemplate restTemplate, long id)
+    {
+        Map<String, Long> genreToDelete = new HashMap<String, Long>();
+        genreToDelete.put("id", id);
+        //DELETE A GENRE WITHOUT GETTING THE Genre DELETED BACK
+        //restTemplate.delete(URL_DELETE_GENRE, genreToDelete);
+        
+        //DELETE A GENRE WITH GETTING THE Genre DELETED BACK
+        ResponseEntity<GenreDTO> genreResult = restTemplate.exchange(URL_DELETE_GENRE, HttpMethod.DELETE , null, GenreDTO.class, genreToDelete);
+        GenreDTO deletedGenre = genreResult.getBody();
+        
+        return deletedGenre;
     }
 }
