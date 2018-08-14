@@ -48,7 +48,7 @@
                         <label for="genreName">Genre Name : </label>
                         <input type="text" th:field="*{genreName}" id="genreName"/>
                         <div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('genreName')}" th:errors="*{genreName}"></div>
-
+                        
                         <br/>
                         <button type="submit" class="button-secondary pure-button">
                             Submit
