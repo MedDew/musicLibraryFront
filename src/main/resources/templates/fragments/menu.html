@@ -1,5 +1,5 @@
 <div th:fragment="menu" class="mx-5 my-3">
-    <div class="dropdown">
+    <div class="dropdown float-menu">
         <div class="btn-group">
             <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 User
@@ -8,6 +8,19 @@
             <div class="dropdown-menu">
                <a class="dropdown-item" th:href="@{/users/create}">Create User</a>
                <a class="dropdown-item" th:href="@{/users}">User's List</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dropdown float-menu">
+        <div class="btn-group">
+            <button type="button" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Genre
+            </button>
+
+            <div class="dropdown-menu">
+               <a class="dropdown-item" th:href="@{/genres/create}">Create Genre</a>
+               <a class="dropdown-item" th:href="@{/genres}">Genre's List</a>
             </div>
         </div>
     </div>
