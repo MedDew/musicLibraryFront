@@ -8,6 +8,7 @@ package com.libraryfront.musicLibraryFront.service;
 import com.musiclibrary.musiclibraryapi.dto.CategoryDTO;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,5 +30,13 @@ public class CategoryService
        List<CategoryDTO> categoryList = restTemplate.getForObject(URL_GET_CATEGORIES, ArrayList.class);
        
        return categoryList;
+   }
+   
+   public CategoryDTO findCategoryById(RestTemplate restTemplate, long id)
+   {
+       ResponseEntity<CategoryDTO> categoryResult = restTemplate.getForEntity(URL_GET_CATEGORY, CategoryDTO.class, id);
+       CategoryDTO foundCategory = categoryResult.getBody();
+       
+       return foundCategory;
    }
 }
