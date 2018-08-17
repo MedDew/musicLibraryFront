@@ -99,7 +99,7 @@ public class UserController
         if(bindingResult.hasErrors())
         {
             System.err.println("userDTO : "+userDTO);
-            return "userForm";
+            return "userCreateForm";
         }
         System.err.println("userDTO to create ==>  "+userDTO);
         UserDTO createdUser = userService.createUser(restTemplate, userDTO);
