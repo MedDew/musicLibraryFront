@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title th:text="${'Category : '+foundCategory.categoryName}"></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/menu_style.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <style type="text/css">
+            .col-centered{
+                float: none;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="mxy-5" th:replace="fragments/menu :: menu"></div>
+        
+        <div class="container">
+           
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2">User Features</h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 col-centered">
+                
+                <div class="card text-white bg-success mb-3">
+                    
+                    <div class="card-header">Category Specific Features</div>
+                    <div class="card-body">
+                        <h5 class="card-title">category characteritics :</h5>
+                        
+                        <ul class="list-group">
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark"> Category Id :</b> <span  th:text="${foundCategory.Id}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">Category Name :</b> <span class="blockquote" th:text="${foundCategory.categoryName}"></span>
+                            </li>
+                        </ul>
+                        
+                        <br/>
+                        <br/>
+                        <br/>
+                        
+                        <a class="btn btn-primary" th:href="@{/categories}">Back to category's list</a>
+                    </div>    
+                </div>
+                
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
