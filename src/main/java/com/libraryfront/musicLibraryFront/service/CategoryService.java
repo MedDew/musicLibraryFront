@@ -8,6 +8,10 @@ package com.libraryfront.musicLibraryFront.service;
 import com.musiclibrary.musiclibraryapi.dto.CategoryDTO;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -38,5 +42,23 @@ public class CategoryService
        CategoryDTO foundCategory = categoryResult.getBody();
        
        return foundCategory;
+   }
+   
+   public CategoryDTO createCategory(RestTemplate restTemplate, CategoryDTO categoryDTO)
+   {
+        //SET THE HEADER TO GET THE REQUEST BODY AS APPLICATION JSON
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+       
+        //CONVERT genreDTO OBJECT TO JSON OBJECT TO BE SENT TO THE WEBSERVICE 
+        JSONObject jsonObj = new JSONObject(categoryDTO);
+        
+        // DATA ATTCHED TO THE REQUEST
+        HttpEntity<String> requestBody = new HttpEntity<>(jsonObj.toString(), headers);
+        
+        ResponseEntity<CategoryDTO> categoryResult = restTemplate.postForEntity(URL_CREATE_CATEGORY, requestBody, CategoryDTO.class);
+        CategoryDTO createdCategory = categoryResult.getBody();
+        
+        return createdCategory;        
    }
 }
