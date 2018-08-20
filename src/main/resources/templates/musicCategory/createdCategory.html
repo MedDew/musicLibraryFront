@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Category Creation Result</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/menu_style.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    </head>
+    
+    <body>
+        
+        <div class="mxy-5" th:replace="fragments/menu :: menu">
+            
+        </div>
+        
+        <div class="container">
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2">Genre Creation Result</h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 mx-auto">
+                
+                <div class="card text-white bg-success mb-3">
+                    
+                    <div class="card-header">Creation Success</div>
+                    <div class="card-body">
+                         <h5 class="card-title">Category saved</h5>
+                         <p class="card-text">
+                             The new category 
+                             <b class="text-warning" th:text="${category.categoryName}"></b> 
+                             has been created
+                         </p>
+                         <a class="btn btn-primary" th:href="@{/categories/create}">Create another category</a>
+                    </div>    
+                </div>
+                
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
