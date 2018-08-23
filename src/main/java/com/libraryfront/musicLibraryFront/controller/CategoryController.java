@@ -5,10 +5,13 @@
  */
 package com.libraryfront.musicLibraryFront.controller;
 
+import com.libraryfront.musicLibraryFront.exception.GenreException;
+import com.libraryfront.musicLibraryFront.exceptionhandler.GenreResponseErrorHandler;
 import com.libraryfront.musicLibraryFront.service.CategoryService;
 import com.musiclibrary.musiclibraryapi.dto.CategoryDTO;
 import java.util.List;
 import javax.validation.Valid;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -65,9 +68,33 @@ public class CategoryController
             return "musicCategory/categoryCreateForm";
         }
         
-        CategoryDTO createdCategory = categoryService.createCategory(restTemplate, categoryDTO);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
         
-        return "redirect:/category/created/"+createdCategory.getId();
+        try 
+        {
+            CategoryDTO createdCategory = categoryService.createCategory(restTemplate, categoryDTO);
+            return "redirect:/category/created/"+createdCategory.getId();
+        } 
+        catch (GenreException e) 
+        {
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = (String) exceptionBodyJSONObj.get("message");
+            
+            System.out.println("RESPONSE.BODY.MESSAGE : "+errorMessage);
+            System.out.println("RESPONSE.BODY.MESSAGE : "+exceptionJsonObj);
+            
+            CategoryDTO errorCategoryDTO = new CategoryDTO();
+            errorCategoryDTO.setErrorMessage(errorMessage);
+            
+            modelMap.addAttribute("errorCategoryDTO", errorCategoryDTO);
+            modelMap.addAttribute("isErrorCategoryDTO", true);
+            
+            return "musicCategory/categoryCreateForm";
+        }
+        
     }
     
     @GetMapping(path = "/category/created/{categoryId}")
