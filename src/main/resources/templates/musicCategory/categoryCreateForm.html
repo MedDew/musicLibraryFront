@@ -46,7 +46,7 @@
                         <label for="categoryName">Category Name : </label>
                         <input type="text" th:field="*{categoryName}" id="categoryName"/>
                         <div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></div>
-                        <!--<div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${isErrorGenreDTO}" th:text="${errorGenreDTO.errorMessage}"></div>-->
+                        <div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${isErrorCategoryDTO}" th:text="${errorCategoryDTO.errorMessage}"></div>
                         
                         
                         <br/>
