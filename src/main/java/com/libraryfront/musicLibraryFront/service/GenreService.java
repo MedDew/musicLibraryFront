@@ -5,7 +5,7 @@
  */
 package com.libraryfront.musicLibraryFront.service;
 
-import com.libraryfront.musicLibraryFront.exception.GenreException;
+import com.libraryfront.musicLibraryFront.exception.Exception;
 import com.musiclibrary.musiclibraryapi.dto.GenreDTO;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class GenreService
         return foundGenre;
     }
     
-    public GenreDTO createGenre(RestTemplate restTemplate, GenreDTO genreDTO) throws GenreException
+    public GenreDTO createGenre(RestTemplate restTemplate, GenreDTO genreDTO) throws Exception
     {
         //SET THE HEADER TO GET THE REQUEST BODY AS APPLICATION JSON
         HttpHeaders headers = new HttpHeaders();
