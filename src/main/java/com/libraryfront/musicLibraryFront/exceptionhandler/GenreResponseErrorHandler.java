@@ -16,8 +16,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -61,6 +59,12 @@ public class GenreResponseErrorHandler implements ResponseErrorHandler
         Factory factory = new Factory();
         Exception exceptionToUse =  factory.getException(exceptionType.get(), response.getStatusCode());
         
+        /*
+         * JUST TO TEST THE FILTERING OF THE EXCEPTION TYPE
+        JSONObject jsonObj = new JSONObject(responseBody);
+        String errorMessage = (String) jsonObj.get("message");
+        Boolean isCategory = errorMessage.contains("Category");
+        */
         
         Map<String, Object> responseProperties = new HashMap<>();
         responseProperties.put("status", response.getStatusCode().toString());

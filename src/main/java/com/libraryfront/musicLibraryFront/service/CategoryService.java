@@ -5,6 +5,7 @@
  */
 package com.libraryfront.musicLibraryFront.service;
 
+import com.libraryfront.musicLibraryFront.exception.GenreException;
 import com.musiclibrary.musiclibraryapi.dto.CategoryDTO;
 import java.util.ArrayList;
 import java.util.List;

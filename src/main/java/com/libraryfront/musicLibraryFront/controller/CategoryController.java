@@ -88,8 +88,12 @@ public class CategoryController
             //RECOVER THE ERROR MESSAGE FROM THE EXCEPTION
             String errorMessage = (String) exceptionBodyJSONObj.get("message");
             
+            System.out.println("RESPONSE.BODY.MESSAGE : "+errorMessage);
+            System.out.println("RESPONSE.BODY.MESSAGE : "+exceptionJsonObj);
+            
             CategoryDTO errorCategoryDTO = new CategoryDTO();
             errorCategoryDTO.setErrorMessage(errorMessage);
+            
             modelMap.addAttribute("errorCategoryDTO", errorCategoryDTO);
             modelMap.addAttribute("isErrorCategoryDTO", true);
             
