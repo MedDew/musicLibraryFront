@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.json.JSONObject;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -36,6 +37,10 @@ public class GenreResponseErrorHandler implements ResponseErrorHandler
         //Convert an InputStream to String
         String responseBody =  new BufferedReader(new InputStreamReader(response.getBody())).lines().collect(Collectors.joining("\n"));
         GenreException genreException = new GenreException(response.getStatusCode());
+        
+        JSONObject jsonObj = new JSONObject(responseBody);
+        String errorMessage = (String) jsonObj.get("message");
+        Boolean isCategory = errorMessage.contains("Category");
         
         Map<String, Object> responseProperties = new HashMap<>();
         responseProperties.put("status", response.getStatusCode().toString());
