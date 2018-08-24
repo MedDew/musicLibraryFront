@@ -13,11 +13,11 @@ import org.springframework.web.client.HttpClientErrorException;
  *
  * @author Mehdi
  */
-public class GenreException extends HttpClientErrorException
+public class Exception extends HttpClientErrorException
 {
     private Map<String, Object> response;
 
-    public GenreException(HttpStatus statusCode) 
+    public Exception(HttpStatus statusCode) 
     {
         super(statusCode);
     }
