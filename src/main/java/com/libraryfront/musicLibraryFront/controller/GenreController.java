@@ -6,6 +6,7 @@
 package com.libraryfront.musicLibraryFront.controller;
 
 import com.libraryfront.musicLibraryFront.component.GenreDTOComponent;
+import com.libraryfront.musicLibraryFront.exception.Exception;
 import com.libraryfront.musicLibraryFront.exception.GenreException;
 import com.libraryfront.musicLibraryFront.exceptionhandler.GenreResponseErrorHandler;
 import com.libraryfront.musicLibraryFront.service.GenreService;
