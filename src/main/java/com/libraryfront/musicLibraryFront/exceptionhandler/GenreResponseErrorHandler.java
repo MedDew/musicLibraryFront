@@ -43,7 +43,7 @@ public class GenreResponseErrorHandler implements ResponseErrorHandler
         
         //RECOVER VALUES OF THE EXCEPTION TYPE TO SEARCH IN
         //BY FILTERING  IN THE ENUM ACCORDING TO THE responseBody
-        ExceptionType.getExceptionTypeDefaultList().stream().forEach((ex) -> System.out.println("ExceptionType : "+ex+" | ex.name() : "+ex.name()+" "+ex.name().getClass().getSimpleName()+" | ex.toString() : "+ex.toString()+" "+ex.toString().getClass().getSimpleName()+" | ExceptionType Type : "+ex.getClass().getSimpleName()) );
+        ExceptionType.getExceptionTypeDefaultList().stream().forEach((ex) -> System.out.println("ExceptionType : "+ex+" | ex.name() : "+ex.name()+" "+ex.name().getClass().getSimpleName()+" | ex.toString() : "+ex.toString()+" "+ex.toString().getClass().getSimpleName()+" "+ex.toString().toLowerCase()+" | ExceptionType Type : "+ex.getClass().getSimpleName()) );
         JSONObject jsonResponseBody = new JSONObject(responseBody);
         String message = (String) jsonResponseBody.get("message");
         String str1 = "CATGEORY";
@@ -53,7 +53,7 @@ public class GenreResponseErrorHandler implements ResponseErrorHandler
         
         //FIND THE RIGHT ExecptionType FROM THE message BY FILTERING AMONG THE Enum DEFAULT ExceptionType
         System.out.println("isStr1 : "+isStr1+" isStr2 : "+isStr2);
-        Optional<ExceptionType> exceptionType = ExceptionType.getExceptionTypeDefaultList().stream().filter((ex) -> message.contains(ex.toString())).findAny();
+        Optional<ExceptionType> exceptionType = ExceptionType.getExceptionTypeDefaultList().stream().filter((ex) -> message.contains(ex.toString().toLowerCase())).findAny();
         
         //RECOVER THE RIGHT ExceptionType TO USE
         Factory factory = new Factory();
