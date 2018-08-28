@@ -286,4 +286,90 @@ public class CategoryController
             return modelAndView;
         }
     }
+    
+    @GetMapping(path = "/categories/delete/{id}")
+    public ModelAndView showDeleteCategoryForm(CategoryDTO categoryDTO, RestTemplate restTemplate,@PathVariable(name = "id") long categoryId)
+    {
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
+        
+        try 
+        {
+            ModelAndView modelAndView = new ModelAndView("/musicCategory/categoryDeleteForm");
+            CategoryDTO categoryToDelete = categoryService.findCategoryById(restTemplate, categoryId);
+            categoryDTOComponent.initCategoryDTO(categoryDTO, categoryToDelete);
+            
+            return modelAndView;
+        } 
+        catch (CategoryException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            CategoryDTO errorCategoryDTO = new CategoryDTO();
+            errorCategoryDTO.setErrorMessage(errorMessage);
+            
+            ModelAndView modelAndView = new ModelAndView("/musicCategory/categoryNotFoundException");
+            
+            modelAndView.addObject("errorCategoryDTO", errorCategoryDTO);
+            modelAndView.addObject("actionType", "Delete");
+            modelAndView.addObject("actionVerb", "delete");
+            
+            return modelAndView;
+        }
+        
+    }
+    
+    @PostMapping(path = "/categories/delete/{id}")
+    public String eraseCategory(@Valid CategoryDTO categoryDTO, BindingResult bindingResult, RestTemplate restTemplate, @PathVariable(name = "id") long categoryId, ModelMap modelMap) 
+    {
+        
+        if(bindingResult.hasErrors())
+        {
+            //Initialze the Category Update Form again
+            CategoryDTO categoryToDelete = categoryService.findCategoryById(restTemplate, categoryId);
+            modelMap.addAttribute("categoryDTO", categoryToDelete);
+            
+            return "/musicCategory/categoryDeleteForm";
+        }
+        
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
+        
+        
+        try 
+        {
+            CategoryDTO categoryDeleted = categoryService.eraseGenre(restTemplate, categoryId);
+            modelMap.addAttribute("category", categoryDeleted);
+            modelMap.addAttribute("categoryId", categoryId);
+            
+            return "/musicCategory/deletedCategory";
+        }
+        catch (CategoryException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            CategoryDTO errorCategoryDTO = new CategoryDTO();
+            errorCategoryDTO.setErrorMessage(errorMessage);
+            
+            modelMap.addAttribute("errorCategoryDTO", errorCategoryDTO);
+            modelMap.addAttribute("actionType", "Delete");
+            modelMap.addAttribute("actionVerb", "delete");
+            
+            return "musicCategory/categoryNotFoundException";
+        }
+    }
 }
