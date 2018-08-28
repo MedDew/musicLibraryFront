@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>CATEGORY NOT FOUND</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/menu_style.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        
+    </head>
+    <body>
+        <div class="mxy-5" th:replace="fragments/menu :: menu">
+            
+        </div>
+        
+        <div class="container">
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2" th:text="${'Unable to '+ #strings.unCapitalize(actionType) +' Category'}"></h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 mx-auto">
+                <div class="card text-white bg-warning mb-3">
+                    
+                    <div class="card-header" th:text="${'No Suitable Catgeory To '+actionType}"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Warning : No Category Found</h5>
+                        <p class="card-text" th:text="${'The category you are trying to '+actionVerb+ ' is not found :'}">
+                            
+                        </p>
+                        
+                        <p class="card-text">
+                            <span class="text-danger" th:text='${errorCategoryDTO.errorMessage}'></span>
+                        </p>
+                        
+                        <a class='btn btn-outline-success' th:href='@{/categories}'>Back To Category List</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+        </div>
+    </body>
+</html>
