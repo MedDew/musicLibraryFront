@@ -46,11 +46,39 @@ public class CategoryController
     @GetMapping("/categories/{id}")
     public ModelAndView showSpecificCategory(@PathVariable(name = "id") long categoryId, RestTemplate restTemplate)
     {
-        CategoryDTO foundCategory = categoryService.findCategoryById(restTemplate, categoryId);
-        ModelAndView modelAndView = new ModelAndView("musicCategory/specificCategory");
-        modelAndView.addObject("foundCategory", foundCategory);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
         
-        return modelAndView;
+        try 
+        {
+            CategoryDTO foundCategory = categoryService.findCategoryById(restTemplate, categoryId);
+            ModelAndView modelAndView = new ModelAndView("musicCategory/specificCategory");
+            modelAndView.addObject("foundCategory", foundCategory);
+            return modelAndView;
+        } 
+        catch (CategoryException e) 
+        {
+            //CONVERT THE EXCEPTION RESPONSE TO JSON OBJECT
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            //RECOVER THE BODY FROM THE RESPONSE
+            String body = exceptionJsonObj.getString("body");
+            //CONVERT THE BODY TO JSON OBJECT
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            //RECOVER THE ERROR MESSAGE FROM THE EXCEPTION
+            String errorMessage = (String) exceptionBodyJSONObj.get("message");
+            
+            System.out.println("RESPONSE.BODY.MESSAGE : "+errorMessage);
+            System.out.println("RESPONSE.BODY.MESSAGE : "+exceptionJsonObj);
+            
+            CategoryDTO errorCategoryDTO = new CategoryDTO();
+            errorCategoryDTO.setErrorMessage(errorMessage);
+            
+            ModelAndView modelAndView = new ModelAndView("musicCategory/categoryNotFoundException");
+            modelAndView.addObject("errorCategoryDTO", errorCategoryDTO);
+            modelAndView.addObject("actionType", "Show");
+            modelAndView.addObject("actionVerb", "get");
+            return modelAndView;
+        }
     }
     
     @GetMapping("/categories/create")
@@ -105,10 +133,39 @@ public class CategoryController
     @GetMapping(path = "/category/created/{categoryId}")
     public ModelAndView showCategoryCreated(RestTemplate restTemplate, @PathVariable long categoryId)
     {
-        CategoryDTO createdCategory = categoryService.findCategoryById(restTemplate, categoryId);
-        ModelAndView modelAndView = new ModelAndView("/musicCategory/createdCategory");
-        modelAndView.addObject("category", createdCategory);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
         
-        return modelAndView;
+        try 
+        {
+            CategoryDTO createdCategory = categoryService.findCategoryById(restTemplate, categoryId);
+            ModelAndView modelAndView = new ModelAndView("/musicCategory/createdCategory");
+            modelAndView.addObject("category", createdCategory);
+            return modelAndView;
+        } 
+        catch (CategoryException e) 
+        {
+            //CONVERT THE EXCEPTION RESPONSE TO JSON OBJECT
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            //RECOVER THE BODY FROM THE RESPONSE
+            String body = exceptionJsonObj.getString("body");
+            //CONVERT THE BODY TO JSON OBJECT
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            //RECOVER THE ERROR MESSAGE FROM THE EXCEPTION
+            String errorMessage = (String) exceptionBodyJSONObj.get("message");
+            
+            System.out.println("RESPONSE.BODY.MESSAGE : "+errorMessage);
+            System.out.println("RESPONSE.BODY.MESSAGE : "+exceptionJsonObj);
+            
+            CategoryDTO errorCategoryDTO = new CategoryDTO();
+            errorCategoryDTO.setErrorMessage(errorMessage);
+            
+            ModelAndView modelAndView = new ModelAndView("musicCategory/categoryNotFoundException");
+            modelAndView.addObject("errorCategoryDTO", errorCategoryDTO);
+            modelAndView.addObject("actionType", "Show");
+            modelAndView.addObject("actionVerb", "get");
+            return modelAndView;
+        }
+        
     }
 }
