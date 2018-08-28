@@ -12,6 +12,7 @@ import java.util.List;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -61,5 +62,23 @@ public class CategoryService
         CategoryDTO createdCategory = categoryResult.getBody();
         
         return createdCategory;        
+   }
+   
+   public CategoryDTO modifyCategory(RestTemplate restTemplate, CategoryDTO categoryDTO, long categoryId)
+   {
+        //SET THE HEADER TO GET THE REQUEST BODY AS APPLICATION JSON
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        
+        //CONVERT genreDTO OBJECT TO JSON OBJECT TO BE SENT TO THE WEBSERVICE 
+        JSONObject jsonObj = new JSONObject(categoryDTO);
+        
+        // DATA ATTCHED TO THE REQUEST
+        HttpEntity<String> requestBody = new HttpEntity<>(jsonObj.toString(), headers);
+       
+       ResponseEntity<CategoryDTO> categoryResult = restTemplate.exchange(URL_UPDATE_CATEGORY, HttpMethod.PUT, requestBody, CategoryDTO.class, categoryId);
+       CategoryDTO updatedCategory = categoryResult.getBody();
+       
+       return updatedCategory; 
    }
 }
