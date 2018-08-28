@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>List of Musics</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link type="text/css" rel="stylesheet" th:href="@{/css/pure-min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/buttons-min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/menu_style.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        
+        <style type="text/css">
+            .block {
+                display: block;
+            }
+            .text-center{
+                text-align: center;
+            }
+            .justify-center {
+                display: inline-block;
+                justify-content: center;
+                /*padding-left:2em;*/ 
+            }
+            .button-success,
+            .button-error,
+            .button-warning{
+                color: white;
+                border-radius: 4px;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            }
+            .button-warning{
+                background: rgb(223, 117, 20); /* this is an orange */
+            }
+            .button-error {
+                background: rgb(202, 60, 60); /* this is a red*/
+            }
+            .button-success{
+                 background: rgb(28, 184, 65); /* this is a green */
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div th:replace="fragments/menu :: menu">
+            
+        </div>
+        
+        <div class="pure-g block">
+            <div class="pure-u-1-5"><!--pure-u-md-1-3-->
+                
+            </div>
+            <div class="pure-u-3-5 justify-center"><!--pure-u-md-1-3-->
+
+                <table class="pure-table pure-table-horizontal pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Id</th>
+                            <th>Album</th>
+                            <th>Band</th>
+                            <th>Release Year</th>
+                            <th>Music Features</th>
+                            <th>UPDATE Action</th>
+                            <th>DELETE Action</th>
+                        </tr>
+                    </thead>
+
+                    <tr th:each="music, iter : ${musicList}">
+                        <td th:text="${iter.count}"></td><!--${category.Id}-->
+                        <td th:text="${music.id}"></td><!--${category.Id}-->
+                        <td th:text="${music.album}"></td><!--${category.categoryName}-->
+                        <td th:text="${music.band}"></td><!--${category.categoryName}-->
+                        <td th:text="${music.releaseYear}"></td><!--${category.categoryName}-->
+                        <td>
+                            <a class="button-success pure-button" th:href="@{'/musics/'+${music.id}}" th:text="${music.album}">
+                            </a> 
+                        </td>
+                        <td>
+                            <a class="button-warning pure-button" th:href="@{'/musics/update/'+${music.id}}">
+                                Update
+                            </a> 
+                        </td>
+                        <td>
+                            <a class="button-error pure-button" th:href="@{'/musics/delete/'+${music.id}}">
+                                Delete
+                            </a> 
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+            <div class="pure-u-1-5"><!--pure-u-md-1-3-->
+                
+            </div>
+                
+        </div>
+        
+    </body>
+</html>
