@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>NOT FOUND</title>
+        <title>GENRE NOT FOUND</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
@@ -16,7 +16,7 @@
         
         <div class="container">
             <div class="mx-auto text-center py-5">
-                <h1 class="display-4 px-2">Unable to amend Genre</h1>
+                <h1 class="display-4 px-2" th:text="${'Unable to '+ #strings.unCapitalize(actionType) +' Genre'}"></h1>
             </div>
             
             <div class="form-group col-md-4">
@@ -25,11 +25,11 @@
             <div class="form-group col-md-4 mx-auto">
                 <div class="card text-white bg-warning mb-3">
                     
-                    <div class="card-header">No Suitable Genre To Update</div>
+                    <div class="card-header" th:text="${'No Suitable Genre To '+actionType}"></div>
                     <div class="card-body">
                         <h5 class="card-title">Warning : No Genre Found</h5>
-                        <p class="card-text">
-                            The genre you are trying to update is not found :
+                        <p class="card-text" th:text="${'The genre you are trying to '+actionVerb+' is not found :'}">
+                            
                         </p>
                         
                         <p class="card-text">
