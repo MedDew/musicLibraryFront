@@ -81,4 +81,13 @@ public class CategoryService
        
        return updatedCategory; 
    }
+   
+   public CategoryDTO eraseGenre(RestTemplate restTemplate, long id)
+   {
+       
+       ResponseEntity<CategoryDTO>  categoryResult = restTemplate.exchange(URL_DELETE_CATEGORY, HttpMethod.DELETE, null, CategoryDTO.class, id);
+       CategoryDTO deletedCategory = categoryResult.getBody();
+       
+       return deletedCategory;
+   }
 }
