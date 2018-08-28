@@ -55,13 +55,37 @@ public class GenreController
     @GetMapping("genres/{genreId}")
     public String showSpecificGenre(RestTemplate restTemplate, Model model, @PathVariable long genreId)
     {
-        GenreDTO foundGenre = genreService.findGenreById(restTemplate, genreId);
-        //WEIRDLY DOES NOT WORK
-        //model.addAttribute(foundGenre);
-        
-        model.addAttribute("foundGenre", foundGenre);
-        
-        return "musicGenre/specificGenre";
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
+        try 
+        {
+            GenreDTO foundGenre = genreService.findGenreById(restTemplate, genreId);
+            //WEIRDLY DOES NOT WORK
+            //model.addAttribute(foundGenre);
+            model.addAttribute("foundGenre", foundGenre);
+            return "musicGenre/specificGenre";
+        } 
+        catch (GenreException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            System.out.println("RESPONSE AS ARRAY : "+e.getResponseBodyAsByteArray());
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            GenreDTO errorGenreDTO = new GenreDTO();
+            errorGenreDTO.setErrorMessage(errorMessage);
+            
+            model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Show");
+            model.addAttribute("actionVerb", "get");
+            
+            return "musicGenre/genreNotFoundException";
+        }
     }
     
     @GetMapping(path = "/genres/create")
@@ -121,11 +145,38 @@ public class GenreController
     @GetMapping("/genre/created/{id}")
     public String showGenreCreated(RestTemplate restTemplate, Model model, @PathVariable long id)
     {
-        GenreDTO createdGenre = genreService.findGenreById(restTemplate, id);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
         
-        model.addAttribute("createdGenre", createdGenre);
+        try 
+        {
+            GenreDTO createdGenre = genreService.findGenreById(restTemplate, id);
+
+            model.addAttribute("createdGenre", createdGenre);
+            return "musicGenre/createdGenre";
+        } 
+        catch (GenreException e) 
+        {
+            System.out.println("RESPONSE.BODY : "+e.getResponse().get("body"));
+            System.out.println("RESPONSE AS ARRAY : "+e.getResponseBodyAsByteArray());
+            
+            //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            GenreDTO errorGenreDTO = new GenreDTO();
+            errorGenreDTO.setErrorMessage(errorMessage);
+            
+            model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Show");
+            model.addAttribute("actionVerb", "get");
+            
+            return "musicGenre/genreNotFoundException";
+        }
         
-        return "musicGenre/createdGenre";
     }
     
     @GetMapping(path = "/genres/update/{id}")
@@ -156,6 +207,8 @@ public class GenreController
             errorGenreDTO.setErrorMessage(errorMessage);
             
             model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Update");
+            model.addAttribute("actionVerb", "amend");
             
             return "musicGenre/genreNotFoundException";
         }
@@ -198,6 +251,8 @@ public class GenreController
             errorGenreDTO.setErrorMessage(errorMessage);
             
             model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Update");
+            model.addAttribute("actionVerb", "amend");
             
             return "musicGenre/genreNotFoundException";
         }
@@ -206,11 +261,34 @@ public class GenreController
     @GetMapping("/genres/updated/{id}")
     public String showUpdatedGenre(RestTemplate restTemplate, Model model, @PathVariable(name = "id") long genreId)
     {
-        GenreDTO updatedGenre = genreService.findGenreById(restTemplate, genreId);
+        //SETTING THE ERROR HANDLER TO HANDLE THE EXCEPTION SENT FROM THE API
+        restTemplate.setErrorHandler(new GenreResponseErrorHandler());
         
-        model.addAttribute("genre", updatedGenre);
+        try 
+        {
+            GenreDTO updatedGenre = genreService.findGenreById(restTemplate, genreId);
+            model.addAttribute("genre", updatedGenre);
+            return "/musicGenre/updatedGenre";
+        } 
+        catch (GenreException e) 
+        {
+             //Recover the exception JSON message
+            JSONObject exceptionJsonObj = new JSONObject(e.getResponse());
+            String body = exceptionJsonObj.getString("body");
+            JSONObject exceptionBodyJSONObj = new JSONObject(body);
+            String errorMessage = exceptionBodyJSONObj.getString("message");
+            
+            //Pass the error message to the view
+            GenreDTO errorGenreDTO = new GenreDTO();
+            errorGenreDTO.setErrorMessage(errorMessage);
+            
+            model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Update");
+            model.addAttribute("actionVerb", "update");
+            
+            return "musicGenre/genreNotFoundException";
+        }
         
-        return "/musicGenre/updatedGenre";
     }
     
     @GetMapping("/genres/delete/{genreId}")
@@ -241,6 +319,8 @@ public class GenreController
             errorGenreDTO.setErrorMessage(errorMessage);
             
             model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Delete");
+            model.addAttribute("actionVerb", "delete");
             
             return "musicGenre/genreNotFoundException";
         }
@@ -278,6 +358,8 @@ public class GenreController
             errorGenreDTO.setErrorMessage(errorMessage);
             
             model.addAttribute("errorGenreDTO", errorGenreDTO);
+            model.addAttribute("actionType", "Delete");
+            model.addAttribute("actionVerb", "delete");
             
             return "musicGenre/genreNotFoundException";
         }
