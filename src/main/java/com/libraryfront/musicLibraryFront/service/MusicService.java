@@ -8,6 +8,7 @@ package com.libraryfront.musicLibraryFront.service;
 import com.musiclibrary.musiclibraryapi.dto.MusicDTO;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,4 +31,11 @@ public class MusicService
         return musicList;
     }
     
+    public MusicDTO findMusicById(RestTemplate restTemplate, long id )
+    {
+        ResponseEntity<MusicDTO> musicResult = restTemplate.getForEntity(URL_GET_MUSIC, MusicDTO.class, id);
+        MusicDTO foundMusic = musicResult.getBody();
+        
+        return foundMusic;
+    }
 }
