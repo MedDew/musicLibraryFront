@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title th:text="${'Music : '+foundMusic.album}">TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/menu_style.css}" />
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <style type="text/css">
+            .col-centered{
+                float: none;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="mxy-5" th:replace="fragments/menu :: menu"></div>
+        
+        <div class="container">
+           
+            <div class="mx-auto text-center py-5">
+                <h1 class="display-4 px-2">Music Features</h1>
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+            <div class="form-group col-md-4 col-centered">
+                
+                <div class="card text-white bg-success mb-3">
+                    
+                    <div class="card-header">Music Specific Features</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Music characteritics :</h5>
+                        
+                        <ul class="list-group">
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark"> Music Id :</b> <span  th:text="${foundMusic.Id}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">Music Album :</b> <span class="blockquote" th:text="${foundMusic.album}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">Music Release Year :</b> <span class="blockquote" th:text="${#temporals.format(foundMusic.releaseYearLocalDate, 'dd-MM-yyyy')}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">Music Category :</b> <span class="blockquote" th:text="${foundMusic.category.categoryName}"></span>
+                            </li>
+                            <li class="list-group-item bg-info">
+                                <b class="text-dark">Music Genre(s) :</b> 
+                                <ul>
+                                    <li th:each="genre, iter : ${foundMusic.genre}">
+                                        <span class="badge badge-light" th:text="${iter.count}"></span>
+                                        <span class="blockquote" th:text="${genre.genreName}"></span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                        <br/>
+                        <br/>
+                        <br/>
+                        
+                        <a class="btn btn-primary" th:href="@{/musics}">Back to music's list</a>
+                    </div>    
+                </div>
+                
+            </div>
+            
+            <div class="form-group col-md-4">
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
