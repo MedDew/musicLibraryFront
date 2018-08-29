@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -24,12 +26,22 @@ public class MusicController
     @Autowired
     private MusicService musicService; 
     
-    @GetMapping(path = "/musics/")
+    @GetMapping(path = "/musics")
     public String showMusicList(RestTemplate restTemplate, ModelMap modelMap )
     {
         List<MusicDTO> musicList = musicService.getMusicList(restTemplate);
         modelMap.addAttribute("musicList", musicList);
         
         return "/music/musicList";
+    }
+    
+    @GetMapping(path = "/musics/{id}")
+    public ModelAndView showSpecificMusic(RestTemplate restTemplate, @PathVariable(name = "id") long musicId)
+    {
+        ModelAndView modelAndView = new ModelAndView("/music/specificMusic");
+        MusicDTO foundMusic = musicService.findMusicById(restTemplate, musicId);
+        modelAndView.addObject("foundMusic", foundMusic);
+        
+        return modelAndView;
     }
 }
