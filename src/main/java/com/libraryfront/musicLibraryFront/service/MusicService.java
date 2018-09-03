@@ -6,9 +6,16 @@
 package com.libraryfront.musicLibraryFront.service;
 
 import com.musiclibrary.musiclibraryapi.dto.MusicDTO;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,5 +44,20 @@ public class MusicService
         MusicDTO foundMusic = musicResult.getBody();
         
         return foundMusic;
+    }
+    
+    public MusicDTO createMusic(RestTemplate restTemplate, MusicDTO musicDTO )
+    {
+        //SET THE HEADER TO GET THE REQUEST BODY AS APPLICATION JSON
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);//MediaType.APPLICATION_JSON Throws a handleHttpMessageNotReadable exception
+        
+        JSONObject jsonObj = new JSONObject(musicDTO);
+
+        // DATA ATTCHED TO THE REQUEST
+        HttpEntity<String> requestBody = new HttpEntity<>(jsonObj.toString(), headers);
+        MusicDTO createdMusic = restTemplate.postForObject(URL_CREATE_MUSIC, requestBody, MusicDTO.class);
+        
+        return createdMusic;
     }
 }
