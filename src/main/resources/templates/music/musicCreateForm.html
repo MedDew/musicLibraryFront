@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Music Creation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!--<link type="text/css" rel="stylesheet" th:href="@{/css/pure-min.css}" />-->
+        <link type="text/css" rel="stylesheet" th:href="@{/css/buttons-min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/menu_style.css}" />
+        <link type="text/css" rel="stylesheet" th:href="@{/css/materialize.min.css}" />
+        
+
+        <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/materialize.min.js}"></script>
+        
+        <script type="text/javascript">
+             $(document).ready(function(){
+                $('select').formSelect();
+              });
+        </script>
+        
+        <style type="text/css">
+            .button-secondary {
+                background: rgb(66, 184, 221); /* this is a light blue */
+                color: white;
+                border-radius: 4px;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            }
+            
+            #alert-name{
+                width : 100%;
+            }
+            
+            #alert-date{
+                width : 55%;
+            }
+            .caret {
+                border-color: transparent !important;
+            }
+        </style>
+        
+    
+    </head>
+    <body>
+        
+        <div th:replace="fragments/menu :: menu"></div>
+        
+        <div class="container">
+            <div class="col m4"><!--pure-u-1-3 pure-u-md-1-3-->
+                
+            </div>
+            
+            <div class="col m4"><!--pure-u-1-3 pure-u-md-1-3-->
+                <form class="pure-form pure-form-stacked" action="#" th:action="@{/musics/create}" th:object="${musicDTO}" method="POST">
+                    
+                    <fieldset>
+                        <legend>Music Creation Form</legend>
+                        
+                        <div class="form-row">
+                            
+                            <div class="col m5"><!--pure-u-3-5-->
+                                
+                                <label for="album">
+                                    Album Name : 
+                                </label>
+                                <input type="text" th:field="*{album}" id="album"/>
+                                <div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('album')}" th:errors="*{album}"></div>
+                                <!--<div id="alert-name" class="alert alert-danger my-2" role="alert" th:if="${isErrorCategoryDTO}" th:text="${errorCategoryDTO.errorMessage}"></div>-->
+                            </div>
+                            
+                           
+                            
+                            <div class="col m5 offset-1"><!-- pure-u-3-5 -->
+                                <label for="band">
+                                    Band Name : 
+                                </label>
+                                <input type="text" th:field="*{band}" class="form-control" id="band" />
+                                <div class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('band')}" th:errors="*{band}"></div>
+                            </div> 
+                        </div> 
+                            
+                        <div class="form-row">
+                            
+                            <div class="col m4"><!-- pure-u-3-5 -->
+                                <label for="release-date">
+                                    Release Date : 
+                                </label>
+                                <input type="date" th:field="*{releaseYear}" class="form-control" id="band" />
+                                <div class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            
+                            <div class="col m4"><!-- pure-u-3-5 -->
+                                    <label for="category">
+                                        Category :
+                                    </label>
+                                <div class="input-field">
+                                    <select th:field="*{categoryId}"><!--id ="category" class="form-control"-->
+                                        <option value="">Choose a music category</option>
+                                        <option th:each="c : ${categorySet}" th:value="${c.id}" th:text="${c.categoryName}"></option>
+                                    </select>
+                                    <div class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" ></div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                            
+                        <div class="form-row">
+                            <div class="col m4"><!-- pure-u-3-5 -->
+                                    <label for="genre">
+                                        Genre :
+                                    </label>
+                                <div class="input-field">
+                                    <select th:field="*{genres}" multiple="multiple" id ="genre"><!-- class="mdb-select" -->
+                                        <option value="" disabled="" selected="">Choose a music genre</option>
+                                        <option th:each="g : ${genreSet}" th:value="${g.Id}" th:text="${g.genreName}"></option>
+                                    </select>
+                                    <div class="alert alert-danger my-2" role="alert" th:if="${#fields.hasErrors('genres')}" th:errors="*{genres}" ></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <br/>
+                        <button type="submit" class="button-secondary pure-button">
+                            Submit
+                        </button>
+                    </fieldset>
+                    
+                </form>
+            </div>
+            
+            <div class="col m4"><!--pure-u-1-3 pure-u-md-1-3-->
+                
+            </div>
+        </div>
+        
+    </body>
+</html>
