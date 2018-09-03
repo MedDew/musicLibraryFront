@@ -11,3 +11,11 @@ and open the template in the editor.
 .float-menu{
     display: inline-flex;
 }
+
+#btn-user{
+    background-color: #007bff;
+}
+
+#btn-genre{
+    background-color: #28a745;
+}
